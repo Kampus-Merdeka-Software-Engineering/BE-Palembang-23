@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShipp</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/pawAdmin/pawAdmin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+</head>
+
+<body>
+    <div class="sidebar-container">
+        <div class="logo-container">
+            <div class="logo-image">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo">
+                <h2>Paws Shipp</h2>
+                <p>Pets For Best</p>
+            </div>
+        </div>
+        <div class="side-contain">
+            <div class="delivery">
+                <p><i class="fa-solid fa-box"></i> Ordering</p>
+            </div>
+            <div class="list-sidebars">
+                <ul>
+                    <li><a href="/waitingforconfirmation">Waiting For Confirmation</a></li>
+                    <li><a href="/ordercancelled">Cancelled</a></li>
+                    <li><a href="/orderhistory">Order History</a></li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <p><i class="fa-solid fa-truck"></i> Delivery</p>
+            </div>
+            <div class="list-sidebar">
+                <ul>
+                    <li><a href="/statusinfo">Check Your Receipt Number</a></li>
+                    <li><a href="/userDeliveryProcess">In processing</a></li>
+                    <li><a href="/UserInDelivery">In Delivery</a></li>
+                    <li><a href="/userDeliveryclaim">Completed</a></li>
+                </ul>
+            </div>
+            <div class="logout-backHome">
+                <a href="/indexAfter"><i class="fa fa-home"></i>Home</a>
+                <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-content">
+        <div class="logo-container2">
+            <div class="logo-image2">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo2">
+                <h2>Paws Shipp</h2>
+                <h2>Waiting For Confirmation</h2>
+            </div>
+        </div>
+
+        <div class="information-container">
+            <div id="trackingInfo" class="information">
+                <div id="result" class="resultInfo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Customer's name</th>
+                                <th>Email</th>
+                                <th>Phone number</th>
+                                <th>Origin address</th>
+                                <th>Destination address</th>
+                                <th>Total price</th>
+                                <th>Order date</th>
+                                <th>Order status</th>
+                                <th>Order details</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+        
+                            <tbody id="pemesanan-list"></tbody>
+                     
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+        
+    function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('userRole');
+
+  if (token && userRole) {
+    // Cek apakah userRole adalah "admin"
+    if (userRole === 'user') {
+      // Izinkan akses ke halaman
+      console.log('Selamat datang, user!');
+    } else {
+      // Redirect pengguna ke halaman masuk jika userRole bukan "admin"
+      window.location.href = '/signin';
+    }
+  } else {
+    // Redirect pengguna ke halaman masuk jika token atau userRole tidak ada
+    window.location.href = '/signin';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  checkAuthentication();
+});
+async function getPemesananList() {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token JWT tidak ditemukan.');
+                return; 
+            }
+            const response = await fetch('pemesanan/waitinglist', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token 
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Gagal mengambil data pemesanan');
+            }
+            const data = await response.json();
+            const pemesananList = data.pemesananList;
+            const pemesananListElement = document.getElementById('pemesanan-list');
+            pemesananListElement.innerHTML = ''; 
+            pemesananList.forEach((pemesanan, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${pemesanan.nama_pelanggan}</td>
+                    <td>${pemesanan.email}</td>
+                    <td>${pemesanan.nomor_telepon}</td>
+                    <td>${pemesanan.alamat_asal}</td>
+                    <td>${pemesanan.alamat_tujuan}</td>
+                    <td>${pemesanan.total_harga}</td>
+                    <td>${pemesanan.tanggal_pemesanan}</td>
+                    <td>${pemesanan.status_pemesanan}</td>
+                    <td><button onclick="tampilkanDetailPemesanan(${pemesanan.id})">Order Details</button></td>
+                    <td>
+  <button onclick="editRow(${pemesanan.id})" style="width: 50px; height: 25px;background-color: blue; color: white;">Edit</button>
+  <br>
+  <button onclick="hapusPemesanan(${pemesanan.id})" style="width: 50px; height: 25px;background-color: red; color: white;">Hapus</button>
+</td>
+                `;
+                pemesananListElement.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Gagal mengambil data pemesanan:', error);
+        }
+    }
+    function tampilkanDetailPemesanan(idPemesanan) {
+    // Redirect ke halaman detail pemesanan dengan mengirim ID pemesanan sebagai parameter
+    window.location.href = `/orderdetail?id=${idPemesanan}`;
+}
+  
+    getPemesananList();
+
+    async function editRow(id) {
+    const token = localStorage.getItem('token'); // Ambil token dari localStorage
+
+    // Prompt pengguna untuk memasukkan data baru
+    const nama_pelanggan = prompt('Masukkan nama pelanggan baru:');
+    if (nama_pelanggan === null) {
+        // Jika pengguna memilih "Batal", keluar dari fungsi tanpa melakukan pengeditan
+        return;
+    }
+
+    const email = prompt('Masukkan email baru:');
+    if (email === null) {
+        return;
+    }
+
+    const nomor_telepon = prompt('Masukkan nomor telepon baru:');
+    if (nomor_telepon === null) {
+        return;
+    }
+
+    const alamat_asal = prompt('Masukkan alamat asal baru:');
+    if (alamat_asal === null) {
+        return;
+    }
+
+    const alamat_tujuan = prompt('Masukkan alamat tujuan baru:');
+    if (alamat_tujuan === null) {
+        return;
+    }
+
+    const updatedData = {
+        nama_pelanggan,
+        email,
+        nomor_telepon,
+        alamat_asal,
+        alamat_tujuan
+    };
+
+    try {
+        const response = await fetch(`/pemesanan/pemesanan-list/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Tambahkan header authorization dengan token
+            },
+            body: JSON.stringify(updatedData)
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message);
+            getPemesananList()
+            // Setelah mengedit, panggil getPemesananList() untuk memperbarui daftar pemesanan
+        } else {
+            console.error('Gagal mengedit pemesanan:', response.status);
+        }
+    } catch (error) {
+        console.error('Gagal mengedit pemesanan:', error);
+    }
+}
+async function hapusPemesanan(id) {
+        try {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                console.error('Token JWT tidak ditemukan.');
+                return;
+            }
+            const response = await fetch(`pemesanan/pemesanan-list/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': 'Bearer ' + token 
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Gagal menghapus pemesanan');
+            }
+            getPemesananList()
+        } catch (error) {
+            console.error('Gagal menghapus pemesanan:', error);
+        }
+    }
+   
+    document.addEventListener("DOMContentLoaded", function () {
+    checkAuthentication();
+  });
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+</script>

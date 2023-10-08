@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShip</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <link rel="stylesheet" href="../css/resiCheck.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="#" class="name-logo">
+                <img src="../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws Ship
+            </a>
+        </div>
+
+        <div class="navbar-nav">
+            <ul>
+                <li><a href="/home">Home</a></li>
+                <li><a href="/price">Price</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/contact">Contact</a></li>
+
+            </ul>
+        </div>
+        <div class="navbar-extra">
+            <a href="/signin">Join With Us</a>
+        </div>
+    </nav>
+    <!-- upper section end -->
+    <div class="content-section">
+        <div class="backHome">
+            <a href="/home">Home</a>
+            <p>> Receipt Number Check</p>
+        </div>
+
+
+        <div class="tittle-resi">
+            <h1>Receipt Number Check</h1>
+            <p>Enter your receipt number</p>
+        </div>
+    </div>
+
+    <!-- input section -->
+    <div class="input-container">
+        <form action="">
+            <label class="isi" for="trackingNumber">Enter Receipt Number</label>
+            <input class="isi" type="text" id="trackingNumber" placeholder="Enter Receipt Number">
+            <button class="isi" id="trackButton"><i class="fa-solid fa-magnifying-glass fa-2xl"></i></button>
+        </form>
+    </div>
+    <div class="information-container">
+        <div id="trackingInfo" class="information">
+            <div id="result" class="resultInfo">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Tracking number</th>
+                            <th>Delivery status</th>
+                            <th>Delivery details</th>
+                            <th>Recipient name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultTable">
+                    <tbody>
+                       
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- input section end -->
+
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <a href="#" class="name-logo">
+                            <img src="../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws Ship
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Find Us</h4>
+                    <ul>
+                        <li>Group 23 Palembang</li>
+                        <li>RevoU Teach Academy</li>
+                        <li>www.pawsship.com</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href=""><i class="fab fa-facebook"></i></a>
+
+                        <a href=""><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="fixed-footer">
+        <div>Copyright & copy; 2023 Paws Ship.com
+        </div>
+    </div>
+    <!-- footer end-->
+
+</html>
+<script>
+    // Function to check authentication and get the token and userRole
+    
+    const trackButton = document.getElementById("trackButton");
+    const trackingNumberInput = document.getElementById("trackingNumber");
+    const resultTable = document.getElementById("resultTable");
+
+    trackButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        // Check authentication and get the token and userRole
+
+
+        const nomorResi = trackingNumberInput.value;
+
+        if (nomorResi.trim() !== "") {
+            try {
+                const response = await fetch(`pengiriman/delivery/${nomorResi}`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Clear existing table rows
+                    resultTable.innerHTML = "";
+
+                    // Append retrieved data to the table
+                    const pengirimanData = data.pengirimanData;
+                    if (pengirimanData) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${pengirimanData.id}</td>
+                            <td>${pengirimanData.nomor_resi}</td>
+                            <td>${pengirimanData.status_pengiriman}</td>
+                            <td>${pengirimanData.detail_pengiriman}</td>
+                            <td>${pengirimanData.nama_penerima}</td>
+                        `;
+                        resultTable.appendChild(row);
+                    } else {
+                        resultTable.innerHTML = "<tr><td colspan='6'>Data pengiriman tidak ditemukan.</td></tr>";
+                    }
+                } else {
+                    resultTable.innerHTML = "<tr><td colspan='6'>Gagal mendapatkan data pengiriman.</td></tr>";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        } else {
+            alert("Mohon masukkan nomor resi terlebih dahulu.");
+        }
+    });
+</script>

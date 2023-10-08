@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShipp</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/pawAdmin/pawAdmin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+</head>
+
+<body>
+    <div class="sidebar-container">
+        <div class="logo-container">
+            <div class="logo-image">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo">
+                <h2>Paws Shipp</h2>
+                <p>Pets For Best</p>
+            </div>
+        </div>
+        <div class="side-contain">
+            <div class="delivery">
+                <p><i class="fa-solid fa-box"></i> Ordering</p>
+            </div>
+            <div class="list-sidebars">
+                <ul>
+                    <li><a href="/adminWaitingconfirmation">Waiting For Confirmation</a></li>
+                <li><a href="/adminOrderCancelled">Cancelled</a></li>
+                    <li><a href="/adminOrderHistory">Order History</a></li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <p><i class="fa-solid fa-truck"></i> Delivery</p>
+            </div>
+            <div class="list-sidebar">
+                <ul>
+                    <li><a href="/adminchekresi">Check Your Receipt Number</a></li>
+<li><a href="/adminDeliveryProcess">In processing</a></li>
+                    <li><a href="/adminOnDelivery">In Delivery</a></li>
+                    <li><a href="/adminInclaim">Completed</a></li>
+                </ul>
+            </div>
+            <div class="logout-backHome">
+             
+                <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-content">
+        <div class="logo-container2">
+            <div class="logo-image2">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo2">
+                <h2>Paws Shipp</h2>
+                <h2>Order details</h2>
+            </div>
+        </div>
+
+        <div class="information-container">
+            <div id="trackingInfo" class="information">
+                <div id="result" class="resultInfo">
+                    <table>
+                        <thead>
+                            <tr>
+                              <th>ID</th>
+                              <th>Animal Name</th>
+                              <th>Animal Type</th>
+                              <th>Weight (Kg)</th>
+                              <th>Price (Rp)</th>
+                            </tr>
+                        </thead>
+        
+                            <tbody id="detailPemesanan"></tbody>
+                     
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+    <script>
+        // Fungsi untuk mengambil ID pemesanan dari URL
+        function ambilIDPemesananDariURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idPemesanan = urlParams.get('id');
+            return idPemesanan;
+        }
+
+        // Fungsi untuk mengambil detail pemesanan dari server berdasarkan ID
+        async function tampilkanDetailPemesanan() {
+    const idPemesanan = ambilIDPemesananDariURL();
+
+    if (!idPemesanan) {
+        console.error('ID pemesanan tidak ditemukan dalam parameter URL');
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token JWT tidak ditemukan.');
+            return;
+        }
+
+        const response = await fetch(`/pemesanan/detailpemesanan/${idPemesanan}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Gagal mengambil detail pemesanan');
+        }
+
+        const data = await response.json();
+const detailPemesanan = data.detailPemesanan;
+const detailPemesananTbody = document.getElementById('detailPemesanan');
+
+if (detailPemesanan.length === 0) {
+    detailPemesananTbody.innerHTML = '<tr><td colspan="5">Tidak ada data detail pemesanan ditemukan.</td></tr>';
+} else {
+    // Mengisi tbody dengan data detail pemesanan
+    const detailPemesananHTML = detailPemesanan.map(item => `
+        <tr>
+            <td>${item.id}</td>
+            <td>${item.nama_hewan}</td>
+            <td>${item.tipe_hewan}</td>
+            <td>${item.berat} Kg</td>
+            <td>Rp ${item.harga}</td>
+        </tr>
+    `).join('');
+
+    detailPemesananTbody.innerHTML = detailPemesananHTML;
+}
+} catch (error) {
+    console.error('Gagal mendapatkan detail pemesanan:', error);
+}
+}
+
+        // Panggil fungsi untuk menampilkan detail pemesanan saat halaman dimuat
+        tampilkanDetailPemesanan();
+    </script>
+

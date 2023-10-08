@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShip</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../../assets/index/icon.png">
+    <link rel="stylesheet" href="../cssAfter/getMovingAfter.css">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+</head>
+
+<body>
+    <!-- navbar dropdown start -->
+    <!-- navbar start -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <a href="#" class="name-logo">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws Ship
+            </a>
+        </div>
+
+        <div class="navbar-nav">
+            <ul>
+                <li><a href="indexAfter.html">Home</a></li>
+                <li><a href="priceAfter.html">Price</a></li>
+                <li><a href="aboutAfter.html">About</a></li>
+                <li><a href="#Contact">Contact</a></li>
+
+            </ul>
+        </div>
+        <div class="navbar-extra">
+            <img src="../../assets/profile/profileDefault.png" alt="" onclick="toggleMenu()">
+        </div>
+    </nav>
+    <!-- navbar end -->
+    <!-- dropdown start -->
+    <div class="sub-menu-wrap" id="subMenu">
+        <div class="sub-menu">
+            <div class="user-info">
+                <img src="../../assets/profile/profileDefault.png" alt="">
+                <div class="textt">
+                    <h2>Paws User</h2>
+                    <p>admin@gmail.com</p>
+                </div>
+            </div>
+            <hr>
+
+            <a href="../../html/pawProfile/profile.html" class="sub-menu-link">
+                <p>Profile</p>
+            </a>
+            <a href="../../html/pawAdmin/pawWaiting1.html" class="sub-menu-link">
+                <p>Pemesanan</p>
+            </a>
+            <a href="../../index.html" class="sub-menu-link">
+                <p>Log Out</p>
+            </a>
+
+        </div>
+    </div>
+    <!-- dropdownend -->
+    <!-- navbar dropdown end -->
+    <!-- upper -->
+    <div class="upper-container">
+        <div class="backHome">
+            <a href="../htmlAfter/indexAfter.html">Home</a>
+            <p> > Let’s Get Moving</p>
+        </div>
+        <div class="tittle-moving">
+            <h1>Let’s Get Moving</h1>
+            <p>Fill out the form below and we will be in touch!</p>
+        </div>
+    </div>
+    <!-- upper end -->
+
+    <div class="form-container">
+        <div id="myForm">
+            <p>Your Information</p>
+            <form onsubmit="">
+                <div class="name-container">
+                    <div class="form-group">
+                        <label class="form-label" for="Name">Name</label>
+                        <input class="form-input" type="text" id="firstName" placeholder="First Name" name="First Name"
+                            required>
+                        <input class="form-input" type="text" id="lastName" placeholder="Last Name" name="Last Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input1" type="email" id="email" placeholder="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone-number">Phone Number</label>
+                    <input class="form-input1" type="text" id="phoneNumber" placeholder="phone number"
+                        name="phone number" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="pets-estimated">Pet’s Estimated Move Date?</label>
+                    <input class="form-input1" type="date" id="moveDate" placeholder="phone number"
+                        name="pets estimated" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="address">where we will pick up your pet?</label>
+                    <input class="form-input1" type="text" id="addressHome" placeholder="address" name="address" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="address">Where will your pet be arriving to?</label>
+                    <input class="form-input1" type="text" id="destinationAddress" placeholder="address" name="address" required>
+                </div>
+
+                <p class="petInformation">Pet Information</p>
+
+                <div class="form-group">
+                    <label class="form-label" for="total-animal">How many pets do you need to relocate?</label>
+                    <input class="form-input1" type="number" id="totalAnimal" placeholder="how many?"
+                        name="total-animal" min="1" max="2" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="name#1">Pet #1 Name</label>
+                    <input class="form-input1" type="text" id="name1" placeholder="name" name="name#1" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="type#1">Pet #1 Type</label>
+                    <input class="form-input1" type="text" id="type1" placeholder="type" name="type#1" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="type#1">Pet #1 Sex</label>
+                    <select class="genderOption" id="gender1" required>
+                        <option value="" disabled selected hidden>Please Choose...</option>
+                        <option value="male">male</option>
+                        <option value="famale">female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Weight#1">Pet #1 Weight in kilograms (kg)</label>
+                    <input class="form-input1" type="text" id="Weight1" placeholder="kilograms (kg)" name="Weight#1">
+                </div>
+                <!-- #2 -->
+                <div class="form-group">
+                    <label class="form-label" for="name#2">Pet #2 Name</label>
+                    <input class="form-input1" type="text" id="name2" placeholder="name" name="name#1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="type#1">Pet #2 Type</label>
+                    <input class="form-input1" type="text" id="type2" placeholder="type" name="type#1">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="type#1">Pet #2 Sex</label>
+                    <select class="genderOption" id="gender2">
+                        <option value="" disabled selected hidden>Please Choose...</option>
+                        <option value="male">male</option>
+                        <option value="famale">female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="Weight#1">Pet #2 Weight in kilograms (kg)</label>
+                    <input class="form-input1" type="text" id="Weight2" placeholder="kilograms (kg)" name="Weight#1"
+                        >
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="message">Anything else should we know?</label>
+                    <textarea class="form-inputmessage" id="message" rows="5" placeholder="your message" name="message"
+                        ></textarea>
+                </div>
+                <div class="button-container">
+                    <button class="form-button" type="submit" id="buttonSubmit">Let’s Get Moving!</button>
+                </div>
+            </form> 
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="row">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <a href="#" class="name-logo">
+                            <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws Ship
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Find Us</h4>
+                    <ul>
+                        <li>Group 23 Palembang</li>
+                        <li>RevoU Teach Academy</li>
+                        <li>www.pawsship.com</li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Service</h4>
+                    <ul>
+
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact</h4>
+                    <div class="social-media">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href=""><i class="fab fa-facebook"></i></a>
+
+                        <a href=""><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <div class="fixed-footer">
+        <div>Copyright & copy; 2023 Paws Ship.com
+        </div>
+    </div>
+    <!-- footer end-->
+
+    <script src="../../js/move.js"></script>
+</body>
+
+</html>

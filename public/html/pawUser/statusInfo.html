@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pawsShip</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../../assets/index/icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/pawAdmin/pawAdmin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+</head>
+
+<body>
+    <div class="sidebar-container">
+        <div class="logo-container">
+            <div class="logo-image">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo">
+                <h2>Paws Shipp</h2>
+                <p>Pets For Best</p>
+            </div>
+        </div>
+        <div class="side-contain">
+            <div class="delivery">
+                <p><i class="fa-solid fa-box"></i> Ordering</p>
+            </div>
+            <div class="list-sidebars">
+                <ul>
+                    <li><a href="/waitingforconfirmation">Waiting For Confirmation</a></li>
+                    <li><a href="/ordercancelled">Cancelled</a></li>
+                    <li><a href="/orderhistory">Order History</a></li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <p><i class="fa-solid fa-truck"></i> Delivery</p>
+            </div>
+            <div class="list-sidebar">
+                <ul>
+                    <li><a href="/statusinfo">Check Your Receipt Number</a></li>
+                    <li><a href="/userDeliveryProcess">In processing</a></li>
+                    <li><a href="/UserInDelivery">In Delivery</a></li>
+                    <li><a href="/userDeliveryclaim">Completed</a></li>
+                </ul>
+            </div>
+            <div class="logout-backHome">
+                <a href="/indexAfter"><i class="fa fa-home"></i>Home</a>
+                <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="right-content">
+        <div class="logo-container2">
+            <div class="logo-image2">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>  
+            <div class="p-logo2">
+                <h2>Paws Shipp</h2>
+                <h2>Check Your Receipt Number</h2>
+            </div>
+        </div>
+
+        <div class="input-container">
+            <form action="">
+                <label class="isi" for="trackingNumber">Enter Receipt Number</label>
+                <input class="isi" type="text" id="trackingNumber" placeholder="Enter Receipt Number">
+                <button class="isi" id="trackButton"><i class="fa-solid fa-magnifying-glass fa-2xl"></i></button>
+            </form>
+        </div>
+        <div class="information-container">
+            <div id="trackingInfo" class="information">
+                <div id="result" class="resultInfo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Tracking number</th>
+                                <th>Delivery status</th>
+                                <th>Delivery details</th>
+                                <th>Recipient name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultTable">
+                        <tbody>
+                           
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+    // Function to check authentication and get the token and userRole
+    function checkAuthentication() {
+        const token = localStorage.getItem('token');
+        const userRole = localStorage.getItem('userRole');
+        return { token, userRole };
+        
+    }
+
+    const trackButton = document.getElementById("trackButton");
+    const trackingNumberInput = document.getElementById("trackingNumber");
+    const resultTable = document.getElementById("resultTable");
+
+    trackButton.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        // Check authentication and get the token and userRole
+        const { token, userRole } = checkAuthentication();
+
+        const nomorResi = trackingNumberInput.value;
+
+        if (nomorResi.trim() !== "") {
+            try {
+                const response = await fetch(`pengiriman/userdelivery/${nomorResi}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include the token in the request headers
+                    }
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Clear existing table rows
+                    resultTable.innerHTML = "";
+
+                    // Append retrieved data to the table
+                    const pengirimanData = data.pengirimanData;
+                    if (pengirimanData) {
+                        const row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${pengirimanData.id}</td>
+                            <td>${pengirimanData.nomor_resi}</td>
+                            <td>${pengirimanData.status_pengiriman}</td>
+                            <td>${pengirimanData.detail_pengiriman}</td>
+                            <td>${pengirimanData.nama_penerima}</td>
+                        `;
+                        resultTable.appendChild(row);
+                    } else {
+                        resultTable.innerHTML = "<tr><td colspan='6'>Data pengiriman tidak ditemukan.</td></tr>";
+                    }
+                } else {
+                    resultTable.innerHTML = "<tr><td colspan='6'>Gagal mendapatkan data pengiriman.</td></tr>";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        } else {
+            alert("Mohon masukkan nomor resi terlebih dahulu.");
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+    checkAuthentication();
+  });
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Pemesanan</title>
+</head>
+<body>
+    <h1>Daftar Pemesanan</h1>
+    <ul id="daftarPemesanan">
+        <!-- Daftar pemesanan akan ditampilkan di sini -->
+    </ul>
+
+    <script>
+         function checkAuthentication() {
+      const token = localStorage.getItem('token');
+      const userRole = localStorage.getItem('userRole');
+  
+      if (token && userRole) {
+        const user = JSON.parse(atob(token.split('.')[1])); 
+        document.querySelector('.name_user').textContent = user.name;
+        document.querySelector('.email_user').textContent = `${user.email}`;
+        if (userRole === 'user') {
+        }
+      } else {
+        alert('User not authenticated. Please login.');
+        window.location.href = '/signin';
+      }
+    }
+        // Fungsi untuk mengambil daftar pemesanan dari server
+        async function tampilkanDaftarPemesanan() {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    console.error('Token JWT tidak ditemukan.');
+                    return;
+                }
+
+                const response = await fetch('/auth/waitingpemesanan', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Gagal mengambil data pemesanan');
+                }
+
+                const data = await response.json();
+                const pemesananList = data.pemesananList;
+                const daftarPemesananUl = document.getElementById('daftarPemesanan');
+                daftarPemesananUl.innerHTML = '';
+
+                // Tampilkan setiap pemesanan dalam daftar
+                pemesananList.forEach(pemesanan => {
+                    const listItem = document.createElement('li');
+                    listItem.innerHTML = `
+                        <p>Nama Pelanggan: ${pemesanan.nama_pelanggan}</p>
+                        <p>Email: ${pemesanan.email}</p>
+                        <p>Nomor Telepon: ${pemesanan.nomor_telepon}</p>
+                        <p>Alamat Asal: ${pemesanan.alamat_asal}</p>
+                        <p>Alamat Tujuan: ${pemesanan.alamat_tujuan}</p>
+                        <p>Total Harga: Rp ${pemesanan.total_harga}</p>
+                        <p>Tanggal Pemesanan: ${new Date(pemesanan.tanggal_pemesanan).toLocaleDateString()}</p>
+                        <p>Status Pemesanan: ${pemesanan.status_pemesanan}</p>
+                        <button onclick="tampilkanDetailPemesanan(${pemesanan.id})">Detail Pemesanan</button>
+                    `;
+                    daftarPemesananUl.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error('Gagal mendapatkan daftar pemesanan:', error);
+            }
+        }
+
+        // Fungsi untuk menampilkan detail pemesanan
+        function tampilkanDetailPemesanan(idPemesanan) {
+            // Redirect ke halaman detail pemesanan dengan mengirim ID pemesanan sebagai parameter
+            window.location.href = `/detailpemesanan?id=${idPemesanan}`;
+        }
+
+        // Panggil fungsi untuk menampilkan daftar pemesanan saat halaman dimuat
+        tampilkanDaftarPemesanan();
+    </script>
+</body>
+</html>

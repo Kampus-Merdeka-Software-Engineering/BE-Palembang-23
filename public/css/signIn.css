@@ -1,0 +1,116 @@
+@media only screen and (max-width: 1150px) {
+    body {
+        display: none;
+    }
+}
+
+body {
+    font-family: 'Poppins';
+    min-height: 100vh;
+    background-image: url(../assets/signIn/bg_signIn.png);
+    background-size: 100vw 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-icon {
+    width: 500px;
+}
+
+.signIn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.signIn-container .form-container .home {
+    text-decoration: none;
+    background-color:#ED5C01;
+    color: black;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+.signIn-container .form-container .home::before{
+    content: "<";
+}
+.signIn-container .form-container .home:hover {
+    color: white;
+
+}
+
+.form-container {
+    padding: 2rem;
+    border-radius: 15px;
+    height: 360px;
+    background-color: #fff;
+    box-shadow: 0px 1px 4px rgba(0, 0 ,0 ,1);
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.form-label {
+    display: block;
+}
+
+.form-input {
+    width: 274px;
+    height: 25px;
+    border: none;
+    border-bottom: 1px solid black;
+
+}
+
+.forgot-group a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+}
+
+.forgot-group a:hover {
+    color: #ED5C01;
+    font-size: 12.5px;
+    transition: 0.2s linear;
+}
+
+
+
+.signin-input {
+    width: 280px;
+    height: 30px;
+    background-color: #ED5C01;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.signin-input:hover {
+    color: white;
+}
+
+.create {
+    font-size: small;
+}
+
+.create a {
+    color:#ED5C01;
+    text-decoration: none;
+    font-size: 13px;
+}
+.create a:hover{
+    font-size: 12.5px;
+    transition: 0.2s linear;
+}
+
+.banner-container img {
+    width: auto;
+    height: auto;
+    margin-left: 200px;
+}

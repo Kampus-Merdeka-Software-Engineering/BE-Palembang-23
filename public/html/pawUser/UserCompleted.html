@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShipp</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/pawAdmin/pawAdmin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+</head>
+
+<body>
+    <div class="sidebar-container">
+        <div class="logo-container">
+            <div class="logo-image">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo">
+                <h2>Paws Shipp</h2>
+                <p>Pets For Best</p>
+            </div>
+        </div>
+        <div class="side-contain">
+            <div class="delivery">
+                <p><i class="fa-solid fa-box"></i> Ordering</p>
+            </div>
+            <div class="list-sidebars">
+                <ul>
+                    <li><a href="/waitingforconfirmation">Waiting For Confirmation</a></li>
+                    <li><a href="/ordercancelled">Cancelled</a></li>
+                    <li><a href="/orderhistory">Order History</a></li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <p><i class="fa-solid fa-truck"></i> Delivery</p>
+            </div>
+            <div class="list-sidebar">
+                <ul>
+                      <li><a href="/statusinfo">Check Your Receipt Number</a></li>
+                    <li><a href="/userDeliveryProcess">In processing</a></li>
+                      <li><a href="/UserInDelivery">In Delivery</a></li>
+                    <li><a href="/userDeliveryclaim">Completed</a></li>
+                </ul>
+            </div>
+            <div class="logout-backHome">
+                    <a href="/indexAfter"><i class="fa fa-home"></i>Home</a>
+                <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-content">
+        <div class="logo-container2">
+            <div class="logo-image2">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo2">
+                <h2>Paws Shipp</h2>
+          <h2>Completed</h2>
+            </div>
+        </div>
+
+        <div class="information-container">
+            <div id="trackingInfo" class="information">
+                <div id="result" class="resultInfo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                       <th>Tracking number</th>
+                                <th>Delivery status</th>
+                                <th>Delivery details</th>
+                                <th>Recipient name</th>
+                            </tr>
+                        </thead>
+        
+                            <tbody id="pengiriman-list"></tbody>
+                     
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+        
+    function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('userRole');
+
+  if (token && userRole) {
+    if (userRole === 'user') {
+      // Izinkan akses ke halaman
+      console.log('Selamat datang, user!');
+    } else {
+      // Redirect pengguna ke halaman masuk jika userRole bukan "admin"
+      window.location.href = '/signin';
+    }
+  } else {
+    // Redirect pengguna ke halaman masuk jika token atau userRole tidak ada
+    window.location.href = '/signin';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  checkAuthentication();
+});
+  async function getpengirimanList() {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token JWT tidak ditemukan.');
+                return; 
+            }
+            const response = await fetch('pengiriman/userdeliveryclaim', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token 
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Gagal mengambil data pengiriman');
+            }
+            const data = await response.json();
+            const pengirimanList = data.pengirimanList;
+            const pengirimanListElement = document.getElementById('pengiriman-list');
+            pengirimanListElement.innerHTML = ''; 
+            pengirimanList.forEach((pengiriman, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${pengiriman.nomor_resi}</td>
+                    <td>${pengiriman.status_pengiriman}</td>
+                    <td>${pengiriman.detail_pengiriman}</td>
+                    <td>${pengiriman.nama_penerima}</td>
+                `;
+                pengirimanListElement.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Gagal mengambil data pengiriman:', error);
+        }
+    }
+    getpengirimanList();
+    document.addEventListener("DOMContentLoaded", function () {
+    checkAuthentication();
+  });
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+</script>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PawsShip</title>
+    <link rel="stylesheet" href="../css/serviceDogAfter.css" />
+    <link
+      class="tab-icon"
+      rel="icon"
+      type="image/x-icon"
+      href="../../assets/index/icon.png"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- navbar dropdown start -->
+    <!-- navbar start -->
+    <nav class="navbar">
+      <div class="nav-logo">
+        <a href="#" class="name-logo">
+          <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws
+          Ship
+        </a>
+      </div>
+
+      <div class="navbar-nav">
+        <ul>
+          <li><a href="/indexAfter">Home</a></li>
+          <li><a href="/priceAfter">Price</a></li>
+          <li><a href="/aboutAfter">About</a></li>
+              <li><a href="/contactAfter">Contact</a></li>
+        </ul>
+      </div>
+      <div class="navbar-extra">
+        <img
+          src="../../assets/profile/profileDefault.png"
+          alt=""
+          onclick="toggleMenu()"
+        />
+      </div>
+    </nav>
+    <!-- navbar end -->
+    <!-- dropdown start -->
+    <div class="sub-menu-wrap" id="subMenu">
+      <div class="sub-menu">
+        <div class="user-info">
+          <img src="../../assets/profile/profileDefault.png" alt="" />
+          <div class="textt">
+            <h2 class="name_user"></h2>
+            <p class="email_user"></p>
+          </div>
+        </div>
+        <hr />
+
+        <a href="/profile" class="sub-menu-link">
+          <p>Profile</p>
+        </a>
+        <a href="/waitingforconfirmation" class="sub-menu-link">
+              <p>Pemesanan</p>
+          </a>
+        <a id="logout-button" class="sub-menu-link" href="javascript:void(0);">
+          <p>Log Out</p>
+        </a>
+      </div>
+    </div>
+    <!-- dropdownend -->
+    <!-- navbar dropdown end -->
+
+    <div>
+      <div class="banner-container">
+        <p>Dog Transport Service</p>
+      </div>
+
+      <div class="article-container">
+        <div class="left-section">
+          <div class="judul">
+            <h2>Everything You Need to Know</h2>
+            <h2>About Cat Transport & Travel</h2>
+          </div>
+          <p>
+            Whether you’re preparing for a permanent move, temporary move, or
+            short-term trip across the US or the globe, figuring out how to
+            arrange safe dog transport can be confusing and overwhelming. Moving
+            dogs is a complicated process, particularly if it involves an
+            international destination requiring vet exams, health certificates,
+            an import permit, and more. You and your furbaby don’t need to
+            navigate the process alone! Look through these resources our pet
+            relocation experts created to better understand the dog shipping
+            process, including national and international regulations. If you'd
+            like professional help ensuring your dog arrives safely at their new
+            home, PetRelocation provides fully managed service to make the
+            process easier.
+          </p>
+        </div>
+
+        <div class="right-section">
+          <div>
+            <img
+              src="../../assets/serviceInformation/image/articleDog.png"
+              alt=""
+            />
+          </div>
+          <div class="judul">
+            <h2>Know Before You Go: Special</h2>
+            <h2>Concerns for Shipping Dogs</h2>
+          </div>
+          <p>
+            When transporting a dog, pet owners should be sure to research the
+            regulations and requirements of the specific airlines they are
+            using, as well as any regional laws.
+          </p>
+        </div>
+      </div>
+
+      <div class="banner2-container">
+        <div class="article-banner">
+          <h2>Learn How We Move</h2>
+          <h2>Your Pet</h2>
+          <p>
+            We understand that each pet relocation is unique and requires
+            specialized care. That's why our experienced team of experts
+            provides top-notch dog transport services and shipping pets with the
+            same dedication and knowledge to ensure a safe journey for your
+            furry family members!Don't let organizing pet travel leave your head
+            spinning; take advantage of our dog delivery services so that
+            everyone arrives safe and sound at their destination.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="row">
+          <div class="footer-col">
+            <div class="footer-logo">
+              <a href="#" class="name-logo">
+                <img
+                  src="../../assets/index/MAIN_LOGO.png"
+                  class="logo"
+                  alt=""
+                />Paws Ship
+              </a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Find Us</h4>
+            <ul>
+              <li>Group 23 Palembang</li>
+              <li>RevoU Teach Academy</li>
+              <li>www.pawsship.com</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Service</h4>
+            <ul></ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="social-media">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+
+              <a href=""><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="fixed-footer">
+      <div>Copyright & copy; 2023 Paws Ship.com</div>
+    </div>
+    <!-- footer end-->
+
+    <script>
+      let subMenu = document.getElementById("subMenu");
+
+      function toggleMenu() {
+        subMenu.classList.toggle("open-menu");
+      }
+    </script>
+  </body>
+</html>
+
+<script>
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logout-button")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+
+  const token = localStorage.getItem("token");
+  const userRole = localStorage.getItem("userRole");
+
+  if (token && userRole) {
+    const user = JSON.parse(atob(token.split(".")[1]));
+    document.querySelector(".name_user").textContent = user.name;
+    document.querySelector(".email_user").textContent = `${user.email}`;
+
+    if (userRole === "user") {
+    }
+  } else {
+    alert("User not authenticated. Please login.");
+    window.location.href = "/signin";
+  }
+  function checkAuthentication() {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
+
+    if (token && userRole) {
+      window.location.href = "/priceAfter";
+    } else {
+      alert("User not authenticated. Please login.");
+
+      window.location.href = "/signin";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const priceLink = document.getElementById("price-link");
+    priceLink.addEventListener("click", function (event) {
+      event.preventDefault();
+      checkAuthentication();
+    });
+  });
+</script>

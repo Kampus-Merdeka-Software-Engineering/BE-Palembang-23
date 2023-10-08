@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Pengguna</title>
+</head>
+<body>
+    <h1>Profil Pengguna</h1>
+    <div id="profile-data">
+        <p>Nama: <span id="name"></span></p>
+        <p>Email: <span id="email"></span></p>
+        <p>role: <span id="role"></span></p>
+    </div>
+    <button id="logout-btn">Logout</button>
+
+    <script>
+        // JavaScript untuk mengambil data profil dari server dan mengelola logout
+        const profileData = document.getElementById('profile-data');
+        const nameElement = document.getElementById('name');
+        const emailElement = document.getElementById('email');
+        const roleElement = document.getElementById('role');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        // Fungsi untuk mengambil data profil dari server
+        async function fetchProfileData() {
+            try {
+                const response = await fetch('auth/profile', {
+                    method: 'GET',
+                    credentials: 'same-origin', // Menggunakan cookie saat melakukan permintaan
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    nameElement.textContent = data.name;
+                    emailElement.textContent = data.email;
+                    roleElement.textContent = data.role;
+                } else {
+                    console.error('Gagal mengambil data profil');
+                }
+            } catch (error) {
+                console.error('Gagal mengambil data profil', error);
+            }
+        }
+
+        // Fungsi untuk melakukan logout
+        async function logout() {
+            try {
+                const response = await fetch('auth/logout', {
+                    method: 'POST',
+                    credentials: 'same-origin', // Menggunakan cookie saat melakukan permintaan
+                });
+                if (response.ok) {
+                    window.location.href = '/login'; // Redirect ke halaman login setelah logout
+                } else {
+                    console.error('Gagal logout');
+                }
+            } catch (error) {
+                console.error('Gagal logout', error);
+            }
+        }
+
+        // Memanggil fungsi untuk mengambil data profil saat halaman dimuat
+        window.addEventListener('load', () => {
+            fetchProfileData();
+        });
+
+        // Menambahkan event listener untuk tombol logout
+        logoutBtn.addEventListener('click', () => {
+            logout();
+        });
+    </script>
+</body>
+</html>

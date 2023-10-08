@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PawsShip</title>
+    <link
+      class="tab-icon"
+      rel="icon"
+      type="image/x-icon"
+      href="../../assets/index/icon.png"
+    />
+    <link rel="stylesheet" href="../css/getMovingAfter.css" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- navbar dropdown start -->
+    <!-- navbar start -->
+    <nav class="navbar">
+      <div class="nav-logo">
+        <a href="#" class="name-logo">
+          <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="" />Paws
+          Ship
+        </a>
+      </div>
+
+      <div class="navbar-nav">
+        <ul>
+          <li><a href="/indexAfter">Home</a></li>
+          <li><a href="/priceAfter">Price</a></li>
+          <li><a href="/aboutAfter">About</a></li>
+          <li><a href="/contactAfter">Contact</a></li>        </ul>
+      </div>
+      <div class="navbar-extra">
+        <img
+          src="../../assets/profile/profileDefault.png"
+          alt=""
+          onclick="toggleMenu()"
+        />
+      </div>
+    </nav>
+    <!-- navbar end -->
+    <!-- dropdown start -->
+    <div class="sub-menu-wrap" id="subMenu">
+      <div class="sub-menu">
+        <div class="user-info">
+          <img src="../../assets/profile/profileDefault.png" alt="" />
+          <div class="textt">
+            <h2 class="name_user"></h2>
+            <p class="email_user"></p>
+          </div>
+        </div>
+        <hr />
+
+        <a href="/profile" class="sub-menu-link">
+          <p>Profile</p>
+        </a>
+      <a href="/waitingforconfirmation" class="sub-menu-link">
+              <p>Pemesanan</p>
+          </a>
+        <a id="logout-button" class="sub-menu-link" href="javascript:void(0);">
+          <p>Log Out</p>
+        </a>
+      </div>
+    </div>
+    <!-- dropdownend -->
+    <!-- navbar dropdown end -->
+    <!-- upper -->
+    <div class="upper-container">
+      <div class="backHome">
+        <a href="/indexAfter">Home</a>
+        <p>> Let’s Get Moving</p>
+      </div>
+      <div class="tittle-moving">
+        <h1>Let’s Get Moving</h1>
+        <p>Fill out the form below and we will be in touch!</p>
+      </div>
+    </div>
+    <!-- upper end -->
+
+    <div class="form-container">
+      <div id="myForm">
+        <p>Your Information</p>
+        <form id="pemesananForm">
+          <div class="name-container">
+            <div class="form-group">
+              <label class="form-label" for="Name">Name</label>
+              <input
+                class="form-input"
+                type="text"
+                id="nama_pelanggan"
+                placeholder="Name"
+                name="nama_pelanggan"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input
+              class="form-input1"
+              type="email"
+              id="email"
+              placeholder="email"
+              name="email"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="phone-number">Phone Number</label>
+            <input
+              class="form-input1"
+              type="text"
+              id="nomor_telepon"
+              placeholder="phone number"
+              name="nomor_telepon"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="address"
+              >where we will pick up your pet?</label
+            >
+            <input
+              class="form-input1"
+              type="text"
+              id="alamat_asal"
+              placeholder="address"
+              name="alamat_asal"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="address"
+              >Where will your pet be arriving to?</label
+            >
+            <input
+              class="form-input1"
+              type="text"
+              id="alamat_tujuan"
+              placeholder="address"
+              name="alamat_tujuan"
+              required
+            />
+          </div>
+
+          <p class="petInformation">Pet Information</p>
+
+          <div class="form-group">
+            <label class="form-label" for="name#1">Pet #1 Name</label>
+            <input
+              class="form-input1"
+              type="text"
+              id="nama_hewan1"
+              placeholder="name"
+              name="nama_hewan1"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="type#1">Pet #1 Type</label>
+            <input
+              class="form-input1"
+              type="text"
+              id="tipe_hewan1"
+              placeholder="type"
+              name="tipe_hewan1"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Weight#1"
+              >Pet #1 Weight in kilograms (kg)</label
+            >
+            <input
+              class="form-input1"
+              type="text"
+              id="berat1"
+              placeholder="kilograms (kg)"
+              name="berat1"
+            />
+          </div>
+          <!-- #2 -->
+          <div class="form-group">
+            <label class="form-label" for="name#2">Pet #2 Name</label>
+            <input
+              class="form-input1"
+              type="text"
+              id="nama_hewan2"
+              placeholder="name"
+              name="nama_hewan2"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="type#1">Pet #2 Type</label>
+            <input
+              class="form-input1"
+              type="text"
+              id="tipe_hewan2"
+              placeholder="type"
+              name="tipe_hewan2"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="Weight#1"
+              >Pet #2 Weight in kilograms (kg)</label
+            >
+            <input
+              class="form-input1"
+              type="text"
+              id="berat2"
+              placeholder="kilograms (kg)"
+              name="berat2"
+            />
+          </div>
+          <div class="button-container">
+            <button class="form-button" type="submit">Let’s Get Moving!</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="row">
+          <div class="footer-col">
+            <div class="footer-logo">
+              <a href="#" class="name-logo">
+                <img
+                  src="../../assets/index/MAIN_LOGO.png"
+                  class="logo"
+                  alt=""
+                />Paws Ship
+              </a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Find Us</h4>
+            <ul>
+              <li>Group 23 Palembang</li>
+              <li>RevoU Teach Academy</li>
+              <li>www.pawsship.com</li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Service</h4>
+            <ul></ul>
+          </div>
+          <div class="footer-col">
+            <h4>Contact</h4>
+            <div class="social-media">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href=""><i class="fab fa-facebook"></i></a>
+
+              <a href=""><i class="fab fa-twitter"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <div class="fixed-footer">
+      <div>Copyright & copy; 2023 Paws Ship.com</div>
+    </div>
+    <!-- footer end-->
+
+    <script src="../../js/move.js"></script>
+  </body>
+</html>
+<script>
+  function checkAuthentication() {
+    const token = localStorage.getItem("token");
+    const userRole = localStorage.getItem("userRole");
+
+    if (token && userRole) {
+      const user = JSON.parse(atob(token.split(".")[1]));
+      document.querySelector(".name_user").textContent = user.name;
+      document.querySelector(".email_user").textContent = `${user.email}`;
+
+      if (userRole === "user") {
+      }
+    } else {
+      alert("User not authenticated. Please login.");
+      window.location.href = "/signin";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    checkAuthentication();
+  });
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logout-button")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+  document
+    .getElementById("pemesananForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        alert("User not authenticated. Please login.");
+        window.location.href = "/signin";
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const data = {};
+
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+
+      try {
+        const response = await fetch("pemesanan/pemesanan", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+          alert("Pemesanan berhasil");
+          window.location.href = '/waitingforconfirmation';
+        } else {
+          alert("Gagal membuat pemesanan");
+        }
+      } catch (error) {
+        console.error(error);
+        alert("Error:", error);
+      }
+    });
+</script>

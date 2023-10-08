@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawsShipp</title>
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../../css/pawAdmin/pawAdmin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+</head>
+
+<body>
+    <div class="sidebar-container">
+        <div class="logo-container">
+            <div class="logo-image">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo">
+                <h2>Paws Shipp</h2>
+                <p>Pets For Best</p>
+            </div>
+        </div>
+        <div class="side-contain">
+            <div class="delivery">
+                <p><i class="fa-solid fa-box"></i> Ordering</p>
+            </div>
+            <div class="list-sidebars">
+                <ul>
+                    <li><a href="/adminWaitingconfirmation">Waiting For Confirmation</a></li>
+                <li><a href="/adminOrderCancelled">Cancelled</a></li>
+                    <li><a href="/adminOrderHistory">Order History</a></li>
+                </ul>
+            </div>
+            <div class="delivery">
+                <p><i class="fa-solid fa-truck"></i> Delivery</p>
+            </div>
+            <div class="list-sidebar">
+                <ul>
+                    <li><a href="/adminchekresi">Check Your Receipt Number</a></li>
+<li><a href="/adminDeliveryProcess">In processing</a></li>
+                    <li><a href="/adminOnDelivery">In Delivery</a></li>
+                    <li><a href="/adminInclaim">Completed</a></li>
+                </ul>
+            </div>
+            <div class="logout-backHome">
+             
+                <button id="logoutButton"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-content">
+        <div class="logo-container2">
+            <div class="logo-image2">
+                <img src="../../assets/index/MAIN_LOGO.png" class="logo" alt="">
+            </div>
+            <div class="p-logo2">
+                <h2>Paws Shipp</h2>
+                <h2>Waiting For Confirmation</h2>
+            </div>
+        </div>
+
+        <div class="information-container">
+            <div id="trackingInfo" class="information">
+                <div id="result" class="resultInfo">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Customer's name</th>
+                                <th>Email</th>
+                                <th>Phone number</th>
+                                <th>Origin address</th>
+                                <th>Destination address</th>
+                                <th>Total price</th>
+                                <th>Order Date</th>
+                                <th>Order status</th>
+                                <th>Order Details</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+        
+                            <tbody id="pemesanan-list"></tbody>
+                     
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<script>
+        
+        function checkAuthentication() {
+  const token = localStorage.getItem('token');
+  const userRole = localStorage.getItem('userRole');
+
+  // Cek apakah token dan userRole ada
+  if (token && userRole) {
+    // Cek apakah userRole adalah "admin"
+    if (userRole === 'admin') {
+      // Izinkan akses ke halaman
+      console.log('Selamat datang, admin!');
+    } else {
+      // Redirect pengguna ke halaman masuk jika userRole bukan "admin"
+      window.location.href = '/signin';
+    }
+  } else {
+    // Redirect pengguna ke halaman masuk jika token atau userRole tidak ada
+    window.location.href = '/signin';
+  }
+}
+
+// Panggil fungsi checkAuthentication() ketika pengguna mencoba mengakses halaman yang perlu diautentikasi
+checkAuthentication();
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  checkAuthentication();
+});
+  async function getPemesananList() {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                console.error('Token JWT tidak ditemukan.');
+                return; 
+            }
+            const response = await fetch('pemesanan/adminwaitingpemesanan', {
+                method: 'GET',
+                headers: {
+                    'Authorization': 'Bearer ' + token 
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Gagal mengambil data pemesanan');
+            }
+            const data = await response.json();
+            const pemesananList = data.pemesananList;
+            const pemesananListElement = document.getElementById('pemesanan-list');
+            pemesananListElement.innerHTML = ''; 
+            pemesananList.forEach((pemesanan, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${pemesanan.nama_pelanggan}</td>
+                    <td>${pemesanan.email}</td>
+                    <td>${pemesanan.nomor_telepon}</td>
+                    <td>${pemesanan.alamat_asal}</td>
+                    <td>${pemesanan.alamat_tujuan}</td>
+                    <td>${pemesanan.total_harga}</td>
+                    <td>${pemesanan.tanggal_pemesanan}</td>
+                    <td>${pemesanan.status_pemesanan}</td>
+                    <td><button onclick="tampilkanDetailPemesanan(${pemesanan.id})">Order Details</button></td>
+                    <td><button onclick="editRow(${pemesanan.id})"style="width: 70px; height: 25px; background-color:green; color:white;"">Disetujui</button>
+                    <br>
+                    <button onclick="cancelRow(${pemesanan.id})"style="width: 70px; height: 25px;background-color:red; color:white;">tolak</button></td>
+                `;
+                pemesananListElement.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Gagal mengambil data pemesanan:', error);
+        }
+    }
+    function tampilkanDetailPemesanan(idPemesanan) {
+    // Redirect ke halaman detail pemesanan dengan mengirim ID pemesanan sebagai parameter
+    window.location.href = `/adminorderdetail?id=${idPemesanan}`;
+}
+  
+    getPemesananList();
+    async function editRow(id) {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token JWT tidak ditemukan.');
+            return;
+        }
+
+        const response = await fetch(`pemesanan/adminwaitingpemesanan/${id}`, { // Update the URL to match your router's endpoint
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            const data = await response.json();
+            alert(data.message);
+            // Jika berhasil, dapatkan kembali daftar pemesanan
+            getPemesananList();
+        } else if (response.status === 400) {
+            const data = await response.json();
+            alert(data.error);
+        } else if (response.status === 404) {
+            alert('Pemesanan tidak ditemukan');
+        } else {
+            alert('Gagal mengubah status pemesanan');
+        }
+    } catch (error) {
+        console.error('Gagal mengirim permintaan:', error);
+    }
+}
+async function cancelRow(id) {
+    try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('Token JWT tidak ditemukan.');
+            return;
+        }
+
+        const response = await fetch(`pemesanan/adminwaitingpemesanancancelled/${id}`, { // Update the URL to match your router's endpoint
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.status === 200) {
+            const data = await response.json();
+            alert(data.message);
+            // Jika berhasil, dapatkan kembali daftar pemesanan
+            getPemesananList();
+        } else if (response.status === 400) {
+            const data = await response.json();
+            alert(data.error);
+        } else if (response.status === 404) {
+            alert('Pemesanan tidak ditemukan');
+        } else {
+            alert('Gagal mengubah status pemesanan');
+        }
+    } catch (error) {
+        console.error('Gagal mengirim permintaan:', error);
+    }
+}
+document.addEventListener("DOMContentLoaded", function () {
+    checkAuthentication();
+  });
+  function logout() {
+    fetch("/auth/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userRole");
+          window.location.href = "/signin";
+        } else {
+          console.error("Logout failed");
+        }
+      })
+      .catch((error) => {
+        console.error("Logout failed:", error);
+      });
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    document
+      .getElementById("logoutButton")
+      .addEventListener("click", function (event) {
+        event.preventDefault();
+        logout();
+      });
+  });
+</script>

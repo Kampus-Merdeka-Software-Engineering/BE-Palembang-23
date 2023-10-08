@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link class="tab-icon" rel="icon" type="image/x-icon" href="../assets/index/icon.png">
+    <title>PawsShip</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/signUp.css">
+</head>
+<body>
+    <div class="signUp-container">
+        <div class="form-container">
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label class="form-label" for="name">Name</label>
+                    <input class="form-input" type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input" type="text" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-input" type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <input class="form-input" type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+                <div class="form-group">
+                    <label id="passwordMatchLabel" class="form-label" style="display:none; color:red;">Password and Confirm Password do not match.</label>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="hint">Your pet's name for Hint</label>
+                    <input class="form-input" type="text" id="hint" name="hint" required>
+                </div>
+                <div class="signUp-group">
+                    <input class="signUp-input" type="submit" value="Sign Up">
+                </div>
+                <div class="create">
+                    <p>Already have an account? <a href="/signin">Sign In</a></p>
+                    <p id="successMessage" style="display: none; color: green;">Pengguna berhasil dibuat!</p>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', async function (e) {
+            e.preventDefault();
+    
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const hint = document.getElementById('hint').value;
+            const role = 'user'; 
+            
+            if (password.length < 6) {
+                alert('Password harus memiliki panjang minimal 6 karakter.');
+                return;
+            }
+    
+            
+            if (password !== confirmPassword) {
+                document.getElementById('passwordMatchLabel').style.display = 'block';
+                document.getElementById('successMessage').style.display = 'none';
+                return;
+            } else {
+                document.getElementById('passwordMatchLabel').style.display = 'none';
+            }
+    
+            try {
+                const createUserResponse = await fetch('/users/create_user', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        password,
+                        hint,
+                        role,
+                    }),
+                });
+    
+                if (createUserResponse.status === 201) {
+                    document.getElementById('successMessage').style.display = 'block';
+    
+                    
+                    window.location.href = '/signin';
+    
+                    
+                    document.getElementById('name').value = '';
+                    document.getElementById('email').value = '';
+                    document.getElementById('password').value = '';
+                    document.getElementById('confirmPassword').value = '';
+                    document.getElementById('hint').value = '';
+    
+                } else {
+                    const data = await createUserResponse.json();
+                    alert('Gagal membuat pengguna: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Terjadi kesalahan:', error);
+                alert('Terjadi kesalahan saat membuat pengguna');
+            }
+        });
+    </script>
+    
+    
+    
+    
+    
+    
+    
+</body>
+</html>

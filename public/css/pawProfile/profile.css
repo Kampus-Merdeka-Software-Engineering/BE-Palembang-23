@@ -1,0 +1,321 @@
+* {
+  font-family: 'poppins';
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+
+}
+
+
+body {
+  background-color: #FFF6DC;
+}
+
+
+/* NAVBAR DROPDOWN START */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.4rem 7%;
+  background-color: #FFF6DC;
+  position: fixed;
+  height: 120px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+  width: 146px;
+  height: 150px;
+}
+
+.navbar .name-logo {
+  display: flex;
+  align-items: center;
+  color: #062D3E;
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.navbar .navbar-nav ul,
+.navbar .navbar-nav li {
+  color: #062D3E;
+  display: inline-block;
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0.2rem;
+}
+
+.navbar .navbar-nav ul {
+  list-style: none;
+  width: 100%;
+}
+
+.navbar .navbar-nav li {
+  float: left;
+  position: relative;
+  width: auto;
+}
+
+.navbar .navbar-nav a {
+  display: flex;
+  color: #062D3E;
+  padding: 10px;
+  text-decoration: none;
+}
+
+.navbar .navbar-nav li:hover a {
+  color: #ED5C01;
+}
+
+.navbar .navbar-nav li::after {
+  content: "";
+  display: block;
+  border-bottom: 3px solid #ED5C01;
+  transform: scaleX(0);
+}
+
+.navbar .navbar-nav li:hover::after {
+  transform: scaleX(0.5);
+  transition: 0.2s linear;
+}
+
+.navbar .navbar-extra img {
+  color: #ffff;
+  background-color: #ED5C01;
+  width: 45px;
+  height: 45px;
+  border-radius: 50px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+/* dropdown */
+.sub-menu-wrap {
+  position: absolute;
+  right: 8%;
+  top: 13%;
+  width: 250px;
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height 0.5s;
+}
+
+.sub-menu-wrap.open-menu {
+  max-height: 400px;
+}
+
+.textt {
+  color: #062D3E;
+}
+
+.textt h2 {
+  font-size: 20px;
+}
+
+.textt p {
+  font-size: 10px;
+}
+
+.user-info {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.user-info img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+
+.sub-menu {
+  background-color: #FDFDFD;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+.sub-menu-link {
+  display: flex;
+  justify-content: end;
+}
+
+.sub-menu-link p {
+  color: #062D3E;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+
+}
+
+/* dropdown end */
+/* NAVBAR DROPDOWN END */
+
+.tittle-profile {
+  margin-top: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #062D3E;
+}
+
+.profile-container {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.profile-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FDFDFD;
+  padding: 50px;
+  width: 43.2rem;
+  height: 25rem;
+  border-radius: 35px;
+}
+
+.profile-section label {
+  font-size: 15px;
+  color: #062D3E;
+  font-weight: bold;
+}
+
+.profile-section span {
+  font-size: 35px;
+  color: #062D3E;
+  font-weight: bold;
+  display: block;
+}
+
+.profile-image {
+  margin-right: 80px;
+}
+
+.profile-image img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.profile-user {
+  margin-bottom: 10px;
+}
+
+.profile-margin {
+  margin-bottom: 10px;
+}
+
+.change {
+  text-align: end;
+
+}
+
+.change a {
+  font-weight: bold;
+  color: #062D3E;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.change a:hover {
+  font-size: 15.8px;
+  transform: all 0.5s ease;
+}
+
+
+/* change section */
+.profile-form {
+  background-color: #FDFDFD;
+  
+}
+
+.changeContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.profileChange {
+  background-color: #FDFDFD;
+  border-radius: 35px;
+  width: 43.2rem;
+  height: 25rem;
+  padding: 53px;
+}
+
+.profileChange h1{
+  font-size: 35px;
+  font-weight: bold;
+  color: #062D3E;
+}
+
+#edit-profile-form label {
+  font-size: 15px;
+  font-weight: bold;
+  color: #062D3E;
+  margin-top: 40px;
+}
+
+#edit-profile-form input {
+  border-bottom: 0.9px solid #062D3E;
+}
+
+
+.tombolSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5rem;
+}
+ 
+#edit-profile-form{
+  margin-top: 30px;
+}
+
+#edit-profile-form label,
+input {
+  display: block;
+  width: 20rem;
+}
+
+.backTo button{
+ right: 10px;
+}
+
+.backTo a,
+button {
+  font-weight: bold;
+  color: #062D3E;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: #FDFDFD;
+}
+
+.backTo a:hover {
+  font-size: 15.8px;
+  transform: all 0.5s ease;
+}
+
+.tombolSection button:hover {
+  font-size: 15.8px;
+  transform: all 0.5s ease;
+}
+
+.page {
+  display: none;
+}
+.page.active {
+  display: block;
+}
