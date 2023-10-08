@@ -104,7 +104,9 @@ const getAdminProcessingPengiriman = async () => {
   const getAdminDeliveryPengiriman = async () => {
     try {
       const pengirimanList = await Pengiriman.findAll({
-        where: { status_pengiriman: 'dikirim' },
+        where: { status_pengiriman: {
+          [Op.not]: ['dalam proses', 'diterima'],
+        }, },
       });
   
       return { pengirimanList };
