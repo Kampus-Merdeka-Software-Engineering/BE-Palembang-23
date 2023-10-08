@@ -126,7 +126,7 @@ async function tampilkanDaftarPemesanan() {
             return;
         }
 
-        const response = await fetch('/pemesanan/userordercancel', {
+        const response = await fetch('https://be-palembang-23-production.up.railway.app/pemesanan/userordercancel', {
             method: 'GET',
             headers: {
                 'Authorization': 'Bearer ' + token
@@ -177,7 +177,7 @@ tampilkanDaftarPemesanan();
     checkAuthentication();
   });
   function logout() {
-    fetch("/auth/logout", {
+    fetch("https://be-palembang-23-production.up.railway.app/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

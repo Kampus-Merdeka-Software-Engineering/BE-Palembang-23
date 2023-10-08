@@ -147,7 +147,7 @@
 
         if (nomorResi.trim() !== "") {
             try {
-                const response = await fetch(`pengiriman/delivery/${nomorResi}`, {
+                const response = await fetch(`https://be-palembang-23-production.up.railway.app/pengiriman/delivery/${nomorResi}`, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

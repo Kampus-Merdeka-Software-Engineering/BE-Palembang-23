@@ -132,7 +132,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error('Token JWT tidak ditemukan.');
                 return; 
             }
-            const response = await fetch('pemesanan/adminwaitingpemesanan', {
+            const response = await fetch('https://be-palembang-23-production.up.railway.app/pemesanan/adminwaitingpemesanan', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token 
@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const response = await fetch(`pemesanan/adminwaitingpemesanan/${id}`, { // Update the URL to match your router's endpoint
+        const response = await fetch(`https://be-palembang-23-production.up.railway.app/pemesanan/adminwaitingpemesanan/${id}`, { // Update the URL to match your router's endpoint
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -215,7 +215,7 @@ async function cancelRow(id) {
             return;
         }
 
-        const response = await fetch(`pemesanan/adminwaitingpemesanancancelled/${id}`, { // Update the URL to match your router's endpoint
+        const response = await fetch(`https://be-palembang-23-production.up.railway.app/pemesanan/adminwaitingpemesanancancelled/${id}`, { // Update the URL to match your router's endpoint
             method: 'PATCH',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
     checkAuthentication();
   });
   function logout() {
-    fetch("/auth/logout", {
+    fetch("https://be-palembang-23-production.up.railway.app/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

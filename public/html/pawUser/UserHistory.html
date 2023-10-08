@@ -125,7 +125,7 @@ async function getPemesananList() {
                 console.error('Token JWT tidak ditemukan.');
                 return; 
             }
-            const response = await fetch('pemesanan/userorderhistory', {
+            const response = await fetch('https://be-palembang-23-production.up.railway.app/pemesanan/userorderhistory', {
                 method: 'GET',
                 headers: {
                     'Authorization': 'Bearer ' + token 
@@ -169,7 +169,7 @@ async function getPemesananList() {
     checkAuthentication();
   });
   function logout() {
-    fetch("/auth/logout", {
+    fetch("https://be-palembang-23-production.up.railway.app/auth/logout", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
