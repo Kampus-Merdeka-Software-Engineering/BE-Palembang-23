@@ -141,7 +141,7 @@ app.use("/orderhistory", (req, res) => {
 });
 app.use("/statusinfo", (req, res) => {
   res.sendFile(
-    path.join(__dirname, "public", "html", "pawUser", "statusinfo.html")
+    path.join(__dirname, "public", "html", "pawUser", "statusInfo.html")
   );
 });
 app.use("/ordercancelled", (req, res) => {
