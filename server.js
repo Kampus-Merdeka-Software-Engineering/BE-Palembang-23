@@ -33,20 +33,20 @@ app.use("/adminorderdetail", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "admindetailpemesanan.html"));
 });
 app.use("/adminOrderHistory", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminOrderHistory.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminOrderHistory.html"));
 });
 app.use("/adminchekresi", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminCheckResi.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminCheckResi.html"));
 });
 
 app.use("/adminWaitingconfirmation", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminWaiting.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminWaiting.html"));
 });
 app.use("/adminOrderCancelled", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminCancel.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminCancel.html"));
 });
 app.use("/adminDeliveryProcess", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminInProcessing.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminInProcessing.html"));
 });
 app.use("/userDeliveryProcess", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "pawUser","UserInProcessing.html"));
@@ -58,10 +58,10 @@ app.use("/userDeliveryclaim", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "pawUser","UserCompleted.html"));
 });
 app.use("/adminOnDelivery", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminInDelivery.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminInDelivery.html"));
 });
 app.use("/adminInclaim", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "pawadmin","adminInclaim.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "pawAdmin","adminInclaim.html"));
 });
 
 app.use("/contactafter", (req, res) => {
