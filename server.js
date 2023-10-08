@@ -168,7 +168,7 @@ app.use("/useMoving", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "useMoving.html"));
 });
 app.use("/forgot", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "html", "forgot.html"));
+  res.sendFile(path.join(__dirname, "public", "html", "Forgot.html"));
 });
 app.use("/faq", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "html", "faq.html"));
