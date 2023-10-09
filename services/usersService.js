@@ -1,6 +1,6 @@
 // userService.js
 
-const User = require('../model/users');
+const User = require('../models/users');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const createUser = async ({ name, email, password, role, hint, images }) => {

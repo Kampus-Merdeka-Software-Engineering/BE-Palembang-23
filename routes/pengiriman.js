@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const deliveryController = require('../controller/pengirimancontrollers');
+const deliveryController = require('../controllers/pengirimancontrollers');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt'); 

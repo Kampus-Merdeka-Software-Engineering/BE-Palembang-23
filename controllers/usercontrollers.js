@@ -1,8 +1,8 @@
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt'); 
-const User = require('../model/users');
-const userService = require('../service/usersService');
+const User = require('../models/users');
+const userService = require('../services/usersService');
 
 const userCreate = async (req, res) => {
   try {

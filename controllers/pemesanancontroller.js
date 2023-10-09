@@ -1,5 +1,5 @@
 
-const pemesananService = require('../service/pemesananService');
+const pemesananService = require('../services/pemesananService');
 
 const adminwaitingpemesananbyid = async (req, res) => {
   const { id } = req.params;

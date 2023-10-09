@@ -1,9 +1,9 @@
 // pemesananService.js
 
-const Pemesanan= require('../model/pemesanan');
-const DetailPemesanan= require('../model/detail_pemesanan');
+const Pemesanan= require('../models/pemesanan');
+const DetailPemesanan= require('../models/detail_pemesanan');
 const sequelize = require('../config/sequelize'); 
-const Pengiriman= require('../model/pengiriman');
+const Pengiriman= require('../models/pengiriman');
 
 const createPemesanan = async (
   nama_pelanggan,

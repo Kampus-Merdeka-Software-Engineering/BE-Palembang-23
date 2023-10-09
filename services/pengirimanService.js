@@ -1,8 +1,8 @@
 const express = require('express');
 const { Op } = require('sequelize');
 const cookieParser = require('cookie-parser');
-const Pemesanan= require('../model/pemesanan');
-const Pengiriman= require('../model/pengiriman');
+const Pemesanan= require('../models/pemesanan');
+const Pengiriman= require('../models/pengiriman');
 const router = express.Router();
 router.use(express.json());
 router.use(cookieParser()); 
