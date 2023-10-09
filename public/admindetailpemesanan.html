@@ -92,6 +92,35 @@
 </html>
 
     <script>
+            function logout() {
+                fetch("https://be-palembang-23-production.up.railway.app/auth/logout", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+            },
+            })
+            .then((response) => {
+                if (response.status === 200) {
+                localStorage.removeItem("token");
+                localStorage.removeItem("userRole");
+                window.location.href = "/signin";
+                } else {
+                console.error("Logout failed");
+                }
+            })
+            .catch((error) => {
+                console.error("Logout failed:", error);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document
+            .getElementById("logoutButton")
+            .addEventListener("click", function (event) {
+                event.preventDefault();
+                logout();
+            });
+        });
         // Fungsi untuk mengambil ID pemesanan dari URL
         function ambilIDPemesananDariURL() {
             const urlParams = new URLSearchParams(window.location.search);
